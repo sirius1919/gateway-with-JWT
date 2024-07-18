@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.127.1:8848
+        namespace: cb1cf7b8-4082-43c7-b6b1-7b8370082be0
+      config:
+        server-addr: 192.168.127.1:8848
+        namespace: cb1cf7b8-4082-43c7-b6b1-7b8370082be0
+        group: DEFAULT_GROUP
+        file-extension: yaml
+        shared-configs:
+          - data-id: shared-redis.yaml
+          - data-id: shared-redisson.yaml
+          - data-id: shared-jwt.yaml
+          - data-id: shared-auth-white-black.yaml

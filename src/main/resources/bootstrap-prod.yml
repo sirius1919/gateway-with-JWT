@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    ####Nacos for Service Discovery
+    nacos:
+      discovery:
+        server-addr: nacos-cluster:8848
+        username: nacos
+        password: 1e3j5g7V
+        namespace: 15f8e23c-e74a-4741-b3f3-fc3b9f75a464
+      config:
+        server-addr: nacos-cluster:8848
+        username: nacos
+        password: 1e3j5g7V
+        namespace: 15f8e23c-e74a-4741-b3f3-fc3b9f75a464
+        group: DEFAULT_GROUP
+        file-extension: yaml
+        shared-configs:
+          - data-id: shared-redis.yaml
+          - data-id: shared-redisson.yaml
+          - data-id: shared-jwt.yaml
+          - data-id: shared-auth-white-black.yaml

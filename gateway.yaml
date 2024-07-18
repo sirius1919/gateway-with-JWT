@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-cluster
+  namespace: nacos-system
+  labels:
+    app: gateway-cluster
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - port: 9527
+      name: server
+      targetPort: 9527
+  selector:
+    app: gateway
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: nacos-system
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: gateway
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                      - gateway
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: gateway
+          imagePullPolicy: Always
+          image: harbor.localhost.com/mycloud/gateway:latest
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9527
+              name: client
+  selector:
+    matchLabels:
+      app: gateway
+---
+# ------------------- App Ingress ------------------- #
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: nacos-system
+  name: gateway-web
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /gateway
+            pathType: Prefix
+            backend:
+              service:
+                name: gateway-cluster
+                port:
+                  name: server
