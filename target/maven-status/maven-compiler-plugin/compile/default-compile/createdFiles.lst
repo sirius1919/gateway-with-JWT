@@ -1,8 +1,0 @@
-com\mcsirius\cloud\config\SecurityConfig.class
-com\mcsirius\cloud\config\AuthProperties.class
-com\mcsirius\cloud\route\DynamicRouteLoader$1.class
-com\mcsirius\cloud\filter\AuthGlobalFilter.class
-com\mcsirius\cloud\config\JwtProperties.class
-com\mcsirius\cloud\route\DynamicRouteLoader.class
-com\mcsirius\cloud\utils\JwtTool.class
-com\mcsirius\cloud\GatewayApplication9527.class
